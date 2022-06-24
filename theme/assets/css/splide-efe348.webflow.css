@@ -713,6 +713,9 @@ blockquote {
 }
 
 .button-2 {
+  padding-right: 40px;
+  padding-bottom: 34px;
+  padding-left: 40px;
   background-color: #0d4f89;
   font-weight: 700;
 }

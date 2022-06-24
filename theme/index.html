@@ -82,23 +82,23 @@
     <header class="section is--dark">
       <div class="container">
         <div class="splide slider1">
-          <div class="splide__track w-dyn-list">
-            <div role="list" class="splide__list w-dyn-items">
-              <div role="listitem" class="splide__slide w-dyn-item">
+          {%- assign collection = collections.slides | sort: "-created-on" -%}<div class="splide__track w-dyn-list">
+            {%- unless collection.length == 0 -%}<div role="list" class="splide__list w-dyn-items">
+              {%- for item in collection -%}<div role="listitem" class="splide__slide w-dyn-item">
                 <div class="slider-square">
-                  <div class="slider-square_img"><img src="{{ images.0.url }}" loading="lazy" alt="{{ images.0.alt | trim | escape }}" class="slider-square_photo"></div>
+                  <div class="slider-square_img"><img data-sizes="[{&quot;max&quot;:767,&quot;size&quot;:&quot;100vw&quot;},{&quot;max&quot;:991,&quot;size&quot;:&quot;54vw&quot;},{&quot;max&quot;:10000,&quot;size&quot;:&quot;38vw&quot;}]" loading="lazy" src="{{ item.data.f_image.url }}" alt="{{ item.data.title }}" class="slider-square_photo"></div>
                   <div class="text-opacity">
-                    <h3 class="heading-3"></h3>
-                    <a href="{{ links.23 }}" class="linkblockslookbook w-inline-block">
-                      <h3 class="sliders_text2"></h3>
+                    <h3 class="heading-3">{{ item.data.f_heading-text-line-1 }}</h3>
+                    <a href="{{ item.data.f_look-link }}" class="linkblockslookbook w-inline-block">
+                      <h3 class="sliders_text2">{{ item.data.f_heading-text-line-2 }}</h3>
                     </a>
                   </div>
                 </div>
-              </div>
-            </div>
-            <div class="w-dyn-empty">
+              </div>{%- endfor -%}
+            </div>{%- endunless -%}
+            {%- if collection.length == 0 -%}<div class="w-dyn-empty">
               <div>{{ texts.3d503d2b }}</div>
-            </div>
+            </div>{%- endif -%}
           </div>
           <div class="splide__arrows">
             <div class="splide__embed w-embed"><button class="splide__arrow splide__arrow--prev"></button></div>
