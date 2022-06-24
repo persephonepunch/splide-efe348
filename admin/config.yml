@@ -1,0 +1,539 @@
+backend:
+  name: git-gateway
+  accept_roles:
+    - admin
+    - editor
+media_folder: theme/assets/images
+public_folder: /assets/images
+collections:
+  - name: pages
+    label: Pages
+    identifier_field: title
+    extension: md
+    create: false
+    delete: false
+    slug: '{{slug}}'
+    editor:
+      preview: false
+    folder: cms/pages
+    fields:
+      - label: Title
+        name: title
+        widget: string
+      - label: Publish Date
+        name: date
+        widget: datetime
+      - label: Layout
+        widget: hidden
+        name: layout
+        default: '{{slug}}.html'
+      - &ref_0
+        label: Seo
+        name: seo
+        widget: object
+        collapsed: true
+        fields:
+          - label: Title
+            name: title
+            widget: string
+            required: false
+          - label: Description
+            name: description
+            widget: string
+            required: false
+          - label: No index
+            name: noindex
+            widget: boolean
+            default: false
+            required: false
+          - label: Open Graph Title
+            name: og:title
+            widget: string
+            required: false
+          - label: Open Graph Image
+            name: og:image
+            widget: image
+            required: false
+            media_library:
+              config:
+                multiple: false
+          - label: Twitter Title
+            name: twitter:title
+            widget: string
+            default: summary
+            required: false
+          - label: Twitter Card
+            name: twitter:card
+            widget: string
+            default: summary
+            required: false
+          - label: Twitter Site
+            name: twitter:site
+            widget: string
+            required: false
+          - label: Twitter Creator
+            name: twitter:creator
+            widget: string
+            required: false
+          - label: Additional HTML tags
+            name: additional_tags
+            widget: text
+            required: false
+  - name: slides
+    label: Slides
+    folder: cms/slides
+    create: true
+    identifier_field: name
+    extension: md
+    slug: '{{slug}}'
+    fields:
+      - hint: ''
+        name: title
+        label: Name
+        widget: string
+        required: true
+      - hint: ''
+        name: created-on
+        label: Created On
+        widget: datetime
+        required: false
+      - hint: ''
+        name: updated-on
+        label: Updated On
+        widget: datetime
+        required: false
+      - hint: ''
+        name: published-on
+        label: Published On
+        widget: datetime
+        required: false
+      - hint: ''
+        name: f_image
+        label: Image
+        widget: object
+        required: true
+        fields:
+          - hint: ''
+            name: url
+            label: Image
+            widget: image
+            required: true
+            allow_multiple: false
+          - hint: Image Alt
+            name: alt
+            label: alt
+            widget: string
+            required: false
+      - hint: ''
+        name: f_color
+        label: Color
+        widget: color
+        required: true
+        enableAlpha: true
+        allowInput: true
+      - hint: ''
+        name: f_heading-text-line-1
+        label: Heading Text Line 1
+        widget: string
+        required: true
+      - hint: ''
+        name: f_heading-text-line-2
+        label: Heading Text Line 2
+        widget: string
+        required: true
+      - hint: ''
+        name: f_look-link
+        label: Look Link
+        widget: string
+        required: false
+      - label: Tags
+        widget: hidden
+        name: tags
+        default: slides
+      - label: Layout
+        widget: hidden
+        name: layout
+        default: '[slides].html'
+      - label: Publish Date
+        name: date
+        widget: datetime
+      - *ref_0
+  - label: Theme Settings
+    name: settings
+    identifier_field: title
+    extension: json
+    create: false
+    delete: false
+    slug: '{{slug}}'
+    editor:
+      preview: false
+    files:
+      - label: General
+        name: site
+        file: cms/_data/settings/site.json
+        fields:
+          - label: Title
+            name: title
+            widget: hidden
+            default: General
+          - hint: Full domain url (needed for a correct sitemap file)
+            name: domain
+            label: Domain
+            widget: string
+            required: false
+          - name: favicon
+            label: Favicon
+            widget: image
+            allow_multiple: false
+            required: false
+          - name: apple_touch_icon
+            label: Apple Touch Icon
+            widget: image
+            allow_multiple: false
+            required: false
+          - name: header_additional_content
+            label: Additional Content Header
+            hint: Content here will be placed before </head> tag
+            widget: text
+            required: false
+          - name: footer_additional_content
+            label: Additional Content Footer
+            hint: Content here will be placed before </body> tag
+            widget: text
+            required: false
+          - name: images_optimization
+            label: Images Optimization
+            widget: object
+            collapsed: false
+            fields:
+              - label: Image Formats
+                name: formats
+                widget: select
+                multiple: true
+                options:
+                  - label: Avif
+                    value: avif
+                  - label: Webp
+                    value: webp
+              - label: Image Dimensions
+                name: dimensions
+                widget: select
+                multiple: true
+                options:
+                  - label: '500'
+                    value: 500
+                  - label: '800'
+                    value: 800
+                  - label: '1080'
+                    value: 1080
+                  - label: '1600'
+                    value: 1600
+                  - label: '2000'
+                    value: 2000
+                  - label: '2600'
+                    value: 2600
+      - label: Colors
+        name: colors
+        file: cms/_data/colors.json
+        fields:
+          - label: Title
+            name: title
+            widget: hidden
+            default: Colors
+      - label: Texts
+        name: texts
+        file: cms/_data/texts.json
+        fields:
+          - label: Title
+            name: title
+            widget: hidden
+            default: Texts
+          - hint: 'Original text: No items found., key: 3d503d2b'
+            label: Text
+            name: 3d503d2b
+            widget: string
+          - hint: 'Original text: shop this look, key: 3a3d1e37'
+            label: Text
+            name: 3a3d1e37
+            widget: string
+          - hint: >-
+              Original text: FOOTJOY X TODD SNYDER THE FRENCH TERRY RAGLAN
+              HOODIE IN NAVY, key: 41a27ce3
+            label: Text
+            name: 41a27ce3
+            widget: string
+          - hint: >-
+              Original text: How would golf’s most iconic players from the
+              Sixties and Seventies dress if they stepped onto the links today?
+              The answer is this new collection of polos, windbreakers, hoodies,
+              cardigans, shorts, joggers, caps, and golf shoes. Here, the humble
+              hoodie gets a clubhouse-worthy upgrade. Made from a performance
+              stretch fabric, this sweatshirt looks as good as it plays. There
+              is white piping and tipping along the waist, cuffs and raglan
+              sleeves. The logo on the chest is an archival style known as the
+              “golf tee and circle.” The FOOTJOY logo on the sleeve is screen
+              printed., key: 6131982e
+            label: Text
+            name: 6131982e
+            widget: text
+          - hint: 'Original text: DETAILS, key: -785b81de'
+            label: Text
+            name: '-785b81de'
+            widget: string
+          - hint: >-
+              Original text: FOOTJOY X TODD SNYDER THE KNIT PIQUE POLO IN BLUE,
+              key: 15170a48
+            label: Text
+            name: 15170a48
+            widget: string
+          - hint: "Original text: How would golf’s most iconic players from the Sixties and Seventies dress if they stepped onto the links today? The answer is this new collection of polos, windbreakers, hoodies, cardigans, shorts, joggers, caps, and golf shoes. Inspired by the tipped polos that were popular in the 1960s, these are made from the performance fabric ProDry Pique. The look is retro, the anti-wicking/anti-microbial technology is state-of-the-art. \_The hand feel is soft and a little bit silky. Design details include tipping on the sleeves, collar, pocket and placket. This is a great polo for on the course, at the 19th Hole and beyond., key: -24f8195"
+            label: Text
+            name: '-24f8195'
+            widget: text
+          - hint: >-
+              Original text: FOOTJOY X TODD SNYDER THE PACKARD GOLF SHOE, key:
+              61c7d18a
+            label: Text
+            name: 61c7d18a
+            widget: string
+          - hint: >-
+              Original text: Todd has designed this limited-edition version of
+              FootJoy’s Packard style as a white leather saddle shoe with a blue
+              camo pattern for the saddle. The hit of camo is framed in gray.
+              The blue color story also turns up in the laces, liner and heel
+              tape with a subtle Todd Snyder logo. As our friends at Footjoy
+              like to say of The Packard, it is “inspired by then, supercharged
+              for now.” Utilizing advanced lightweight materials and the
+              proprietary VersaTrax+ traction technology, the Premiere Series
+              delivers incredible underfoot comfort, game-changing traction, and
+              Tour-caliber performance., key: 64a449dd
+            label: Text
+            name: 64a449dd
+            widget: text
+          - hint: >-
+              Original text: FOOTJOY X TODD SNYDER THE SEERSUCKER GLEN PLAID
+              MADISON SHORT, key: 334f8414
+            label: Text
+            name: 334f8414
+            widget: string
+          - hint: "Original text: How would golf’s most iconic players from the Sixties and Seventies dress if they stepped onto the links today? The answer is this new collection of polos, windbreakers, hoodies, cardigans, shorts, joggers, caps, and golf shoes. A case in point: Our popular Madison Short combines the polish of a dress short with the relaxed vibe of a pull on. The short has an elastic waistband and a drawcord waist. \_The Glen Plaid pattern adds a sartorial touch to an otherwise casual look, and the seersucker fabric is almost all cotton with just a hint of stretch. \_Perfect for those days you’re trying to sneak in 9 holes before or after working from home., key: -6b1f6e60"
+            label: Text
+            name: '-6b1f6e60'
+            widget: text
+          - hint: 'Original text: Patreon, key: 34109a55'
+            label: Text
+            name: 34109a55
+            widget: string
+          - hint: 'Original text: Dribbble, key: -20e9cf80'
+            label: Text
+            name: '-20e9cf80'
+            widget: string
+          - hint: 'Original text: YouTube, key: 280d3723'
+            label: Text
+            name: 280d3723
+            widget: string
+          - hint: 'Original text: Instagram, key: 792b2792'
+            label: Text
+            name: 792b2792
+            widget: string
+          - hint: 'Original text: Use with CMS or plain divs, key: 7a76443d'
+            label: Text
+            name: 7a76443d
+            widget: string
+          - hint: 'Original text: Carousel Slider Collection, key: 6bd5ac9d'
+            label: Text
+            name: 6bd5ac9d
+            widget: string
+          - hint: 'Original text: Watch Tutorial, key: 8b86fcf'
+            label: Text
+            name: 8b86fcf
+            widget: string
+          - hint: 'Original text: arrows & pagination, key: 4ab8aeaa'
+            label: Text
+            name: 4ab8aeaa
+            widget: string
+          - hint: 'Original text: Style Guide, key: -7aba473'
+            label: Text
+            name: '-7aba473'
+            widget: string
+      - label: Links
+        name: links
+        file: cms/_data/links.json
+        fields:
+          - label: Title
+            name: title
+            widget: hidden
+            default: Links
+          - hint: 'Original link: #, key: 23'
+            label: Link
+            name: '23'
+            widget: string
+          - hint: >-
+              Original link:
+              https://www.toddsnyder.com/products/ts-x-fj-french-terry-hoodie-navy-navy,
+              key: 5a7d1e27
+            label: Link
+            name: 5a7d1e27
+            widget: string
+          - hint: >-
+              Original link:
+              https://www.toddsnyder.com/products/ts-x-fj-knit-polo-blue, key:
+              -36abed51
+            label: Link
+            name: '-36abed51'
+            widget: string
+          - hint: >-
+              Original link:
+              https://www.toddsnyder.com/products/ts-x-footjoy-shoe-black-camo-black,
+              key: 136859fb
+            label: Link
+            name: 136859fb
+            widget: string
+          - hint: >-
+              Original link:
+              https://www.toddsnyder.com/products/ts-x-footjoy-madison-short-plaid-grey,
+              key: -139a66c8
+            label: Link
+            name: '-139a66c8'
+            widget: string
+          - hint: 'Original link: /, key: 2f'
+            label: Link
+            name: 2f
+            widget: string
+          - hint: 'Original link: https://www.patreon.com/timothyricks, key: 40e98cd3'
+            label: Link
+            name: 40e98cd3
+            widget: string
+          - hint: 'Original link: https://dribbble.com/tricks, key: 5dfaed'
+            label: Link
+            name: 5dfaed
+            widget: string
+          - hint: >-
+              Original link: https://www.youtube.com/c/timothy-ricks, key:
+              -50d0a5d6
+            label: Link
+            name: '-50d0a5d6'
+            widget: string
+          - hint: 'Original link: https://www.instagram.com/timricks/, key: -52c769fd'
+            label: Link
+            name: '-52c769fd'
+            widget: string
+          - hint: >-
+              Original link: https://www.youtube.com/watch?v=1QY8Kab4SNs, key:
+              2fb1b93b
+            label: Link
+            name: 2fb1b93b
+            widget: string
+      - label: Images
+        name: images
+        file: cms/_data/images.json
+        fields:
+          - label: Title
+            name: title
+            widget: hidden
+            default: Images
+          - label: Image
+            name: 611dd774
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: '356e9843'
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: '0'
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: 5de66a1e
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: 2585f840
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: '-161921be'
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: '-1c59eea7'
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: '-6d4bc131'
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+publish_mode: editorial_workflow
